@@ -2645,7 +2645,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Register Service Worker for offline capabilities
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () () => {
+  window.addEventListener('load', () => { // This is line 2648 in the original code.
     navigator.serviceWorker.register('/service-worker.js')
       .then(registration => {
         console.log('Service Worker registered with scope:', registration.scope);
@@ -2653,5 +2653,5 @@ if ('serviceWorker' in navigator) {
       .catch(error => {
         console.error('Service Worker registration failed:', error);
       });
-  });
+  }); // Ensure this closing parenthesis matches the opening one for window.addEventListener
 }
