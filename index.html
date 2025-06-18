@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRC Chess Tournaments - Home</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-gray-100 font-inter min-h-screen flex flex-col items-center p-4">
+    <header class="w-full max-w-4xl bg-gray-800 p-4 rounded-xl shadow-lg flex justify-between items-center mb-6 neumorphic-card">
+        <h1 class="text-3xl font-bold text-gray-50 flex items-center">
+            <span class="mr-3 text-yellow-400">
+                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2L6 5V19L12 22L18 19V5L12 2Z" />
+                    <path d="M12 4.472L16.242 6.5V17.528L12 19.528L7.758 17.528V6.5L12 4.472Z" fill="#CBD5E0" />
+                    <path d="M12 6.5L7.758 8.528V17.528L12 19.528L16.242 17.528V8.528L12 6.5Z" fill="#4299E1" />
+                    <path d="M12 9.5L9.5 11.5L12 13.5L14.5 11.5L12 9.5Z" fill="#F6E05E" />
+                </svg>
+            </span>
+            MRC Chess Tournaments
+        </h1>
+        <nav class="flex space-x-4">
+            <a href="index.html" class="neumorphic-button px-5 py-2 text-lg text-gray-200 hover:text-white" aria-label="Go to Home page">Home</a>
+            <a href="tournament-detail.html?new=true" class="neumorphic-button px-5 py-2 text-lg text-gray-200 hover:text-white" aria-label="Create a new tournament">Create Tournament</a>
+        </nav>
+    </header>
+
+    <div id="message-area" class="p-3 rounded-lg text-white mb-6 w-full max-w-md text-center hidden" role="alert" aria-live="polite" aria-atomic="true"></div>
+
+    <main class="w-full max-w-4xl neumorphic-card p-8 rounded-xl shadow-lg mb-8" role="main">
+        <h2 class="text-3xl font-bold mb-8 text-gray-50 text-center">Your Tournaments</h2>
+
+        <div class="flex justify-center space-x-4 mb-8" role="group" aria-label="Filter tournaments by status">
+            <button id="filter-active-btn" class="neumorphic-button px-6 py-3 text-lg font-semibold text-blue-300" aria-pressed="true">Active</button>
+            <button id="filter-completed-btn" class="neumorphic-button px-6 py-3 text-lg font-semibold text-gray-300" aria-pressed="false">Completed</button>
+        </div>
+
+        <div id="tournament-list" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6" role="list">
+            </div>
+        <div class="flex justify-center mt-8">
+            <label class="neumorphic-button cursor-pointer px-6 py-3 text-lg font-semibold text-green-300 hover:text-green-100">
+                Import Tournament from JSON
+                <input type="file" accept=".json" id="importFileInput" class="hidden" aria-label="Select JSON file to import tournament">
+            </label>
+        </div>
+    </main>
+
+    <footer class="mt-8 text-gray-400 text-sm">
+        <p>&copy; 2024 MRC Chess Tournaments. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

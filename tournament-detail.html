@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRC Chess Tournaments - Tournament Details</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-inter min-h-screen flex flex-col items-center p-4">
+    <header class="w-full max-w-4xl bg-gray-800 p-4 rounded-xl shadow-lg flex justify-between items-center mb-6 neumorphic-card">
+        <h1 class="text-3xl font-bold text-gray-50 flex items-center">
+            <span class="mr-3 text-yellow-400">
+                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2L6 5V19L12 22L18 19V5L12 2Z" />
+                    <path d="M12 4.472L16.242 6.5V17.528L12 19.528L7.758 17.528V6.5L12 4.472Z" fill="#CBD5E0" />
+                    <path d="M12 6.5L7.758 8.528V17.528L12 19.528L16.242 17.528V8.528L12 6.5Z" fill="#4299E1" />
+                    <path d="M12 9.5L9.5 11.5L12 13.5L14.5 11.5L12 9.5Z" fill="#F6E05E" />
+                </svg>
+            </span>
+            MRC Chess Tournaments
+        </h1>
+        <nav class="flex space-x-4">
+            <a href="index.html" class="neumorphic-button px-5 py-2 text-lg text-gray-200 hover:text-white" aria-label="Go to Home page">Home</a>
+            <a href="tournament-detail.html?new=true" class="neumorphic-button px-5 py-2 text-lg text-gray-200 hover:text-white" aria-label="Create a new tournament">Create Tournament</a>
+        </nav>
+    </header>
+
+    <div id="message-area" class="p-3 rounded-lg text-white mb-6 w-full max-w-md text-center hidden" role="alert" aria-live="polite" aria-atomic="true"></div>
+
+    <main id="tournament-detail-container" class="w-full max-w-4xl neumorphic-card p-8 rounded-xl shadow-lg mb-8" role="main">
+        <div id="tournament-info" class="mb-8">
+            <h2 id="tournament-name" class="text-3xl font-bold mb-4 text-gray-50 text-center" aria-live="polite"></h2>
+            <p class="text-gray-300 text-center text-lg mb-2">Mode: <span id="tournament-mode" class="font-medium text-gray-200 capitalize" aria-live="polite"></span></p>
+            <p class="text-gray-300 text-center text-lg mb-2">Time Control: <span id="tournament-time-control" class="font-medium text-gray-200" aria-live="polite"></span></p>
+            <p class="text-gray-300 text-center text-lg mb-2">Total Rounds: <span id="tournament-total-rounds" class="font-medium text-gray-200" aria-live="polite"></span></p>
+            <p class="text-gray-300 text-center text-lg mb-6">Status: <span id="tournament-status" class="font-medium capitalize" aria-live="polite"></span></p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                <button id="admin-panel-btn" class="neumorphic-button px-4 py-2 text-md font-semibold text-purple-300 hover:text-purple-100" aria-label="Go to Admin Panel for this tournament">Admin Panel</button>
+                <button id="download-pdf-btn" class="neumorphic-button px-4 py-2 text-md font-semibold text-red-300 hover:text-red-100" aria-label="Download tournament details as PDF">Download PDF</button>
+                <button id="export-json-btn" class="neumorphic-button px-4 py-2 text-md font-semibold text-blue-300 hover:text-blue-100" aria-label="Export tournament data as JSON">Export Tournament JSON</button>
+            </div>
+            <div class="flex justify-center mt-6">
+                 <button id="delete-tournament-btn" class="neumorphic-button px-4 py-2 text-md font-semibold bg-red-600 text-white hover:bg-red-700" aria-label="Delete this tournament permanently">Delete Tournament</button>
+            </div>
+        </div>
+
+        <section id="team-management" class="mb-8 p-6 neumorphic-card rounded-lg" aria-label="Manage Teams">
+            <h3 class="text-2xl font-semibold mb-4 text-gray-50">Manage Teams</h3>
+            <div class="flex flex-col md:flex-row gap-4 mb-6">
+                <label for="new-team-name" class="visually-hidden">New Team Name</label>
+                <input type="text" id="new-team-name" placeholder="Team Name" class="neumorphic-input flex-grow" aria-label="Enter new team name">
+                <button id="add-team-btn" class="neumorphic-button px-4 py-2 text-md font-semibold text-blue-300 hover:text-blue-100" aria-label="Add new team">Add Team</button>
+            </div>
+            <div id="teams-list">
+                <h4 class="text-xl font-semibold mb-4 text-gray-200">Current Teams:</h4>
+                <ul id="team-list-ul" class="space-y-3" role="list" aria-live="polite" aria-atomic="true">
+                    </ul>
+                <p id="no-teams-message" class="text-gray-400 italic mt-4 hidden">No teams added yet.</p>
+            </div>
+        </section>
+
+
+        <section id="player-management" class="mb-8 p-6 neumorphic-card rounded-lg" aria-label="Manage Players">
+            <h3 class="text-2xl font-semibold mb-4 text-gray-50">Manage Players</h3>
+            <div class="flex flex-col md:flex-row gap-4 mb-6">
+                <label for="new-player-name" class="visually-hidden">New Player Name</label>
+                <input type="text" id="new-player-name" placeholder="Player Name" class="neumorphic-input flex-grow" aria-label="Enter new player name">
+                <label for="new-player-rating" class="visually-hidden">Player Rating (optional)</label>
+                <input type="number" id="new-player-rating" placeholder="Rating (optional)" class="neumorphic-input w-full md:w-32" aria-label="Enter new player rating, optional">
+                <label for="new-player-team" class="visually-hidden">Select Team for new player</label>
+                <select id="new-player-team" class="neumorphic-select w-full md:w-48 hidden" aria-label="Assign team to new player">
+                    <option value="">Select Team</option>
+                    </select>
+                <button id="add-player-btn" class="neumorphic-button px-4 py-2 text-md font-semibold text-green-300 hover:text-green-100" aria-label="Add new player">Add Player</button>
+            </div>
+
+            <div id="players-list">
+                <h4 class="text-xl font-semibold mb-4 text-gray-200">Current Players:</h4>
+                <ul id="player-list-ul" class="space-y-3" role="list" aria-live="polite" aria-atomic="true">
+                    </ul>
+                <p id="no-players-message" class="text-gray-400 italic mt-4 hidden">No players added yet.</p>
+            </div>
+        </section>
+
+        <section id="current-round" class="mb-8 p-6 neumorphic-card rounded-lg hidden" aria-label="Current Round Pairings">
+            <h3 class="text-2xl font-semibold mb-4 text-gray-50">Current Round (<span id="current-round-number" aria-live="polite"></span>) Pairings</h3>
+            <div id="pairings-list" class="space-y-4" role="list" aria-live="polite" aria-atomic="true">
+                </div>
+            <p id="no-pairings-message" class="text-gray-400 italic mt-4 hidden">No pairings for this round yet.</p>
+        </section>
+
+        <section id="leaderboard-section" class="p-6 neumorphic-card rounded-lg hidden" aria-label="Tournament Leaderboard">
+            <h3 class="text-2xl font-semibold mb-4 text-gray-50">Leaderboard</h3>
+            <table class="w-full text-left table-auto" role="grid" aria-live="polite" aria-atomic="true">
+                <thead>
+                    <tr class="bg-gray-700 rounded-md">
+                        <th class="px-4 py-2 rounded-tl-lg" scope="col">Rank</th>
+                        <th class="px-4 py-2" scope="col">Player</th>
+                        <th class="px-4 py-2" scope="col">Score</th>
+                        <th class="px-4 py-2" scope="col">Tie-Break</th>
+                        <th class="px-4 py-2 rounded-tr-lg team-col" scope="col">Team</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboard-body">
+                    </tbody>
+            </table>
+            <p id="no-leaderboard-message" class="text-gray-400 italic mt-4 hidden">Leaderboard will appear after the tournament starts and results are recorded.</p>
+        </section>
+    </main>
+
+    <div id="player-details-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="player-details-title" tabindex="-1">
+        <div class="modal-content neumorphic-card">
+            <h3 id="player-details-title" class="text-2xl font-bold mb-6 text-gray-50">Player Details</h3>
+            <div id="modal-player-info" class="text-gray-200 space-y-3 text-left">
+                <p><strong>Name:</strong> <span id="modal-player-name"></span></p>
+                <p><strong>Team:</strong> <span id="modal-player-team"></span></p>
+                <p><strong>Rating:</strong> <span id="modal-player-rating"></span></p>
+                <p><strong>Score:</strong> <span id="modal-player-score"></span></p>
+                <p><strong>Wins:</strong> <span id="modal-player-wins"></span></p>
+                <p><strong>Losses:</strong> <span id="modal-player-losses"></span></p>
+                <p><strong>Draws:</strong> <span id="modal-player-draws"></span></p>
+                <p><strong>Matches Played:</strong> <span id="modal-player-matches-played"></span></p>
+            </div>
+            <button id="close-player-details-modal" class="neumorphic-button mt-8 px-6 py-3 text-lg font-semibold text-blue-300 hover:text-blue-100" aria-label="Close player details modal">Close</button>
+        </div>
+    </div>
+
+
+    <div id="celebration-overlay" class="celebration-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="celebration-title" tabindex="-1">
+        <div class="celebration-content">
+            <h3 id="celebration-title" class="text-5xl font-extrabold text-yellow-300 mb-4 animate-bounce">Tournament Completed!</h3>
+            <p class="text-2xl text-gray-100">Congratulations to all participants!</p>
+            <button id="celebration-close-btn" class="neumorphic-button mt-6 px-6 py-3 text-lg font-semibold text-white bg-blue-600 hover:bg-blue-700" aria-label="Close celebration message">Awesome!</button>
+        </div>
+        <audio id="celebration-audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" preload="auto"></audio>
+    </div>
+
+    <footer class="mt-8 text-gray-400 text-sm">
+        <p>&copy; 2024 MRC Chess Tournaments. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

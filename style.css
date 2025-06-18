@@ -1,0 +1,512 @@
+/* style.css */
+
+/* Base styles and Inter font */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #1a202c; /* Tailwind's bg-gray-900 */
+    color: #e2e8f0; /* Tailwind's text-gray-100 */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Header */
+header {
+    width: 100%;
+    max-width: 960px; /* Tailwind's max-w-4xl */
+    background-color: #2d3748; /* Tailwind's bg-gray-800 */
+    padding: 1.25rem; /* Increased padding */
+    border-radius: 0.75rem; /* Tailwind's rounded-xl */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Tailwind's shadow-lg */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem; /* Increased margin-bottom */
+}
+
+header h1 {
+    font-size: 1.875rem; /* Tailwind's text-3xl */
+    font-weight: 700; /* Tailwind's font-bold */
+    color: #f7fafc; /* Tailwind's text-gray-50 */
+    display: flex;
+    align-items: center;
+}
+
+header h1 svg {
+    width: 2rem; /* Tailwind's w-8 */
+    height: 2rem; /* Tailwind's h-8 */
+    margin-right: 0.75rem; /* Tailwind's mr-3 */
+    color: #f6e05e; /* Tailwind's text-yellow-400 */
+}
+
+header nav {
+    display: flex;
+    gap: 1.25rem; /* Increased space-x-4 */
+}
+
+/* Main content area */
+main {
+    width: 100%;
+    max-width: 960px; /* Tailwind's max-w-4xl */
+    padding: 2rem; /* Increased padding */
+    border-radius: 0.75rem; /* Tailwind's rounded-xl */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Tailwind's shadow-lg */
+    margin-bottom: 2rem; /* Added margin-bottom */
+}
+
+main h2 {
+    font-size: 1.875rem; /* Tailwind's text-3xl */
+    font-weight: 700; /* Tailwind's font-bold */
+    margin-bottom: 2rem; /* Increased margin-bottom */
+    color: #f7fafc; /* Tailwind's text-gray-50 */
+    text-align: center;
+}
+
+/* Section titles within main */
+section h3 {
+    margin-bottom: 1.5rem; /* Consistent spacing below section titles */
+}
+
+/* Messages (success/error) */
+#message-area {
+    width: 100%;
+    max-width: 600px; /* Tailwind's max-w-md */
+    border-radius: 0.5rem; /* Tailwind's rounded-lg */
+    padding: 0.75rem; /* Tailwind's p-3 */
+    margin-bottom: 1.5rem; /* Increased margin-bottom */
+    text-align: center;
+}
+
+#message-area.info {
+    background-color: #3182ce; /* Tailwind's bg-blue-600 */
+}
+
+#message-area.error {
+    background-color: #e53e3e; /* Tailwind's bg-red-600 */
+}
+
+/* Neumorphic Styles */
+.neumorphic-button {
+    background: #333;
+    border-radius: 12px;
+    box-shadow: 8px 8px 15px #1a1a1a, -8px -8px 15px #4c4c4c;
+    transition: all 0.2s ease-in-out;
+    border: none;
+    cursor: pointer;
+    padding: 0.75rem 1.25rem; /* Default padding for buttons */
+    font-size: 1.125rem; /* text-lg */
+    font-weight: 600; /* font-semibold */
+    color: #cbd5e0; /* text-gray-200 */
+    outline: none; /* Remove focus outline */
+}
+
+.neumorphic-button:hover {
+    box-shadow: inset 2px 2px 5px #1a1a1a, inset -2px -2px 5px #4c4c4c;
+    transform: scale(0.98);
+    color: #f7fafc; /* text-white */
+}
+
+.neumorphic-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: inset 2px 2px 5px #1a1a1a, inset -2px -2px 5px #4c4c4c; /* Keep pressed look when disabled */
+    transform: none; /* Prevent scaling on hover when disabled */
+}
+
+.neumorphic-input, .neumorphic-select, .neumorphic-textarea {
+    background: #333;
+    border-radius: 8px;
+    box-shadow: inset 2px 2px 5px #1a1a1a, inset -2px -2px 5px #4c4c4c;
+    border: none;
+    padding: 0.75rem 1rem;
+    color: #ccc;
+    outline: none;
+}
+
+.neumorphic-input:focus, .neumorphic-select:focus, .neumorphic-textarea:focus {
+    box-shadow: inset 2px 2px 5px #1a1a1a, inset -2px -2px 5px #4c4c4c, 0 0 0 3px #63b3ed; /* Focus ring */
+}
+
+.neumorphic-card {
+    background: #333;
+    border-radius: 15px;
+    box-shadow: 10px 10px 20px #1a1a1a, -10px -10px 20px #4c4c4c;
+}
+
+/* Specific button color overrides */
+.neumorphic-button.text-blue-300:hover { color: #90cdf4; } /* blue-100 */
+.neumorphic-button.text-green-300:hover { color: #9ae6b4; } /* green-100 */
+.neumorphic-button.text-red-300:hover { color: #feb2b2; } /* red-100 */
+.neumorphic-button.text-purple-300:hover { color: #d6bcfa; } /* purple-100 */
+.neumorphic-button.text-yellow-300:hover { color: #faf089; } /* yellow-100 */
+
+/* Active filter button style */
+#filter-active-btn.active, #filter-completed-btn.active {
+    background: linear-gradient(145deg, #444, #222); /* Darker, more pressed look */
+    box-shadow: inset 2px 2px 5px #1a1a1a, inset -2px -2px 5px #4c4c4c;
+    color: #ffffff; /* White text for active */
+}
+
+
+/* Player list styling */
+#player-list-ul li {
+    background: #2a2a2a;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: inset 1px 1px 3px #1a1a1a, inset -1px -1px 3px #4c4c4c;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    gap: 0.75rem; /* Increased space between items */
+}
+
+#player-list-ul li .player-name {
+    flex-grow: 1;
+    color: #e2e8f0;
+    cursor: pointer; /* Indicate clickable */
+    font-weight: 500;
+}
+#player-list-ul li .player-name:hover {
+    color: #63b3ed; /* Highlight on hover */
+}
+#player-list-ul li .player-rating {
+    font-weight: 600;
+    color: #90cdf4; /* blue-300 */
+    margin-left: 0.75rem; /* Increased space between name and rating */
+}
+#player-list-ul li .player-team {
+    font-style: italic;
+    color: #a0aec0; /* gray-400 */
+    margin-left: 0.75rem;
+}
+
+
+#player-list-ul li .action-buttons {
+    display: flex;
+    gap: 0.75rem; /* Increased space between buttons */
+    margin-left: auto; /* Push buttons to the right */
+}
+#player-list-ul li .action-buttons button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem; /* text-sm */
+    border-radius: 8px; /* Slightly smaller radius for small buttons */
+}
+
+/* Team list styling */
+#team-list-ul li {
+    background: #2a2a2a;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: inset 1px 1px 3px #1a1a1a, inset -1px -1px 3px #4c4c4c;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    gap: 0.75rem; /* Increased space between items */
+}
+
+#team-list-ul li span {
+    flex-grow: 1;
+    color: #e2e8f0;
+    font-weight: 500;
+}
+#team-list-ul li .action-buttons button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    border-radius: 8px;
+}
+
+
+/* Table styling for leaderboard and pairings */
+table {
+    border-collapse: separate; /* Use separate to allow border-radius on cells */
+    border-spacing: 0; /* Remove default spacing */
+    width: 100%;
+}
+table thead tr {
+    background-color: #2d3748; /* bg-gray-700 */
+}
+table th, table td {
+    padding: 1rem;
+    border-bottom: 1px solid #4a5568; /* border-gray-600 */
+}
+table tbody tr:last-child td {
+    border-bottom: none; /* No border for the last row */
+}
+table tbody tr:nth-child(odd) {
+    background-color: #2a2a2a; /* Slightly different background for odd rows */
+}
+table tbody tr:hover {
+    background-color: #3f3f3f; /* Darker hover effect */
+}
+table th:first-child, table td:first-child { border-top-left-radius: 8px; border-bottom-left-radius: 8px; }
+table th:last-child, table td:last-child { border-top-right-radius: 8px; border-bottom-right-radius: 8px; }
+
+/* Hide team column if not team tournament */
+.team-col.hidden {
+    display: none;
+}
+
+
+/* Styling for pairing results */
+.pairing-item {
+    background: #2a2a2a;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: inset 1px 1px 3px #1a1a1a, inset -1px -1px 3px #4c4c4c;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem; /* Increased gap */
+}
+.pairing-item .board-number {
+    font-size: 0.875rem; /* text-sm */
+    font-weight: bold;
+    color: #f6e05e; /* yellow-400 */
+    margin-bottom: 0.25rem;
+}
+.pairing-item .players {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #f7fafc;
+    display: flex; /* Make players inline */
+    justify-content: space-between; /* Space out players */
+    align-items: center;
+}
+.pairing-item .players span:first-child {
+    color: #fc8181; /* Red-400 */
+}
+.pairing-item .players span:last-child {
+    color: #63b3ed; /* Blue-400 */
+}
+.pairing-item .result-control {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem; /* Increased gap */
+    flex-wrap: wrap; /* Allow wrapping */
+}
+.pairing-item .result-control select {
+    flex-grow: 1;
+    min-width: 120px; /* Ensure select is not too small */
+}
+.pairing-item .result-control button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    border-radius: 8px;
+    flex-shrink: 0; /* Prevent button from shrinking */
+}
+
+/* Cup Flowchart Specific Styles */
+#cup-flowchart {
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align to start for horizontal scroll */
+    color: #a0aec0; /* text-gray-400 */
+    gap: 50px; /* Gap between rounds */
+}
+
+.cup-round {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0; /* Prevent shrinking when scrolling */
+}
+
+.cup-round .matches-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Gap between matches in a round */
+}
+
+.cup-match {
+    background-color: #2d3748; /* bg-gray-800 */
+    border: 1px solid #4a5568; /* border-gray-600 */
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    width: 150px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    position: relative;
+    color: #e2e8f0;
+}
+
+.cup-match.winner-declared {
+    background-color: #2f855a; /* green-700 */
+    border-color: #38a169; /* green-600 */
+    font-weight: bold;
+}
+
+.cup-player-node { /* For nodes that represent only players, not matches */
+  background-color: #3a3a3a;
+}
+
+.cup-match-players div {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cup-match-score {
+    font-weight: bold;
+    color: #f6e05e;
+}
+
+.cup-round-container {
+    display: flex;
+    flex-direction: row; /* Rounds horizontally */
+    align-items: center;
+    gap: 50px; /* Gap between rounds */
+    position: relative;
+}
+
+/* Celebration Overlay */
+.celebration-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.5s forwards;
+}
+.celebration-overlay.hidden {
+    display: none;
+}
+
+.celebration-content {
+    background: linear-gradient(145deg, #444, #222);
+    border-radius: 20px;
+    padding: 2.5rem; /* Increased padding */
+    text-align: center;
+    color: white;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 215, 0, 0.5);
+    transform: scale(0.8);
+    animation: popUp 0.5s forwards ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes popUp {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+@keyframes confetti-fall {
+    0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+.confetti {
+    position: fixed; /* Use fixed for full viewport coverage */
+    width: 10px;
+    height: 10px;
+    background-color: var(--confetti-color);
+    animation: confetti-fall var(--confetti-duration) linear forwards;
+    opacity: 0;
+    z-index: 1001; /* Above the overlay content */
+}
+
+/* Modal Overlay Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999; /* Below celebration */
+    animation: fadeIn 0.3s forwards;
+}
+
+.modal-content {
+    padding: 2.5rem; /* Increased padding */
+    text-align: center;
+    transform: scale(0.9);
+    animation: popUp 0.3s forwards ease-out;
+    max-width: 550px; /* Slightly wider */
+    width: 90%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+
+/* Utility for hidden elements */
+.hidden {
+    display: none !important;
+}
+/* Visually hidden for accessibility but still rendered */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0,0,0,0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    header nav {
+        width: 100%;
+        justify-content: center;
+    }
+    main {
+        padding: 1.5rem; /* Adjusted for smaller screens */
+    }
+    .grid {
+        grid-template-columns: 1fr;
+    }
+    #player-list-ul li, #team-list-ul li {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    #player-list-ul li .action-buttons, #team-list-ul li .action-buttons {
+        margin-left: 0;
+        width: 100%;
+        justify-content: flex-end; /* Align buttons to the right */
+    }
+    .cup-round-container {
+        flex-direction: column; /* Stack rounds vertically on small screens */
+        gap: 20px;
+    }
+    /* No complex lines on small screens - simplified flowchart rendering */
+    .neumorphic-button {
+        padding: 0.6rem 1rem;
+        font-size: 1rem;
+    }
+    .neumorphic-input, .neumorphic-select, .neumorphic-textarea {
+        padding: 0.6rem 0.8rem;
+    }
+    .modal-content {
+        padding: 2rem; /* Adjusted for smaller screens */
+    }
+    .modal-content #modal-player-info {
+        text-align: left; /* Ensure text remains left-aligned in modal on small screens */
+    }
+    .pairing-item .result-control {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .pairing-item .result-control select,
+    .pairing-item .result-control button {
+      width: 100%;
+    }
+}

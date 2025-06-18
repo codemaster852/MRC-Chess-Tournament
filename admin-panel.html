@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MRC Chess Tournaments - Admin Panel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0; padding: 16px;
+      background-color: #1a202c;
+      color: #e2e8f0;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header {
+      width: 100%;
+      max-width: 960px;
+      background-color: #2d3748;
+      padding: 1rem 1.25rem;
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      box-shadow: 10px 10px 20px #1a1a1a, -10px -10px 20px #4c4c4c;
+      position: sticky;
+      top: 0;
+      height: 64px;
+      backdrop-filter: saturate(180%) blur(10px);
+      background: rgba(45, 55, 72, 0.75);
+      z-index: 1000;
+    }
+    header h1 {
+      font-weight: 700;
+      font-size: 1.875rem;
+      color: #f7fafc;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    header h1 svg {
+      width: 2rem;
+      height: 2rem;
+      color: #f6e05e;
+      flex-shrink: 0;
+    }
+    nav {
+      display: flex;
+      gap: 1rem;
+    }
+    nav a, nav button {
+      background: #333;
+      border-radius: 12px;
+      box-shadow: 8px 8px 15px #1a1a1a, -8px -8px 15px #4c4c4c;
+      border: none;
+      cursor: pointer;
+      color: #cbd5e0;
+      font-weight: 600;
+      font-size: 1.125rem;
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: all 0.2s ease-in-out;
+      outline-offset: 4px;
+    }
+    nav a:hover, nav button:hover,
+    nav a:focus-visible, nav button:focus-visible {
+      box-shadow: inset 2px 2px 5px #1a1a1a, inset -2px -2px 5px #4c4c4c;
+      color: #f7fafc;
+      transform: scale(0.98);
+      outline: 3px solid #90cdf4;
+      outline-offset: 2px;
+    }
+    nav button {
+      background-color: #2d3748;
+      color: #cbd5e0;
+      font-weight: 600;
+      border-radius: 12px;
+      transition: background-color 0.3s ease;
+    }
+    nav button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      box-shadow: none;
+      background-color: #1a202c;
+      color: #718096;
+      transform: none;
+      outline: none;
+    }
+    main {
+      width: 100%;
+      max-width: 960px;
+      background: #333;
+      border-radius: 15px;
+      box-shadow: 10px 10px 20px #1a1a1a, -10px -10px 20px #4c4c4c;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      min-height: calc(100vh - 120px);
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    h2, h3, h4 {
+      margin: 0 0 1rem 0;
+      color: #f7fafc;
+    }
+    section {
+      background: #2d3748;
+      padding: 1.5rem 1.75rem;
+      border-radius: 12px;
+    }
+    .grid {
+      display: grid;
+      gap: 1rem;
+    }
+    .grid-cols-1 {
+      grid-template-columns: 1fr;
+    }
+    @media(min-width: 768px) {
+      .md\\:grid-cols-2 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .md\\:grid-cols-4 {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .md\\:grid-cols-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .flex {
+      display: flex;
+      gap: 1rem;
+    }
+    .flex-col {
+      flex-direction: column;
+    }
+    .items-center {
+      align-items: center;
+    }
+    .justify-between {
+      justify-content: space-between;
+    }
+    .justify-center {
+      justify-content: center;
+    }
+    .rounded-lg {
+      border-radius: 12px;
+    }
+    .rounded-xl {
+      border-radius: 15px;
+    }
+    .neumorphic-button {
+      background: #333;
+      border-radius: 12px;
+      box-shadow: 8px 8px 15px #1a1a1a, -8px -8px 15px #4c4c4c;
+      transition: all 0.2s ease-in-out;
+      border: none;
+      cursor: pointer;
+      padding: 0.75rem 1.25rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #cbd5e0;
+      outline-offset: 4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
+      user-select: none;
+    }
+    .neumorphic-button:hover,
+    .neumorphic-button:focus-visible {
+      box-shadow: inset 2px 2px 5px #1a1a1a, inset -2px -2px 5px #4c4c4c;
+      transform: scale(0.98);
+      color: #f7fafc;
+      outline: 3px solid #90cdf4;
+      outline-offset: 2px;
+    }
+    .neumorphic-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+      outline: none;
+      color: #718096;
+      background-color: #1a202c;
+    }
+    .neumorphic-select, .neumorphic-input {
+      background: #333;
+      border-radius: 8px;
+      box-shadow: inset 2px 2px 5px #1a1a1a, inset -2px -2px 5px #4c4c4c;
+      border: none;
+      padding: 0.75rem 1rem;
+      color: #ccc;
+      outline-offset: 4px;
+      font-size: 1rem;
+      width: 100%;
+      transition: box-shadow 0.2s ease;
+    }
+    .neumorphic-select:focus, .neumorphic-input:focus {
+      box-shadow: inset 2px 2px 5px #1a1a1a, inset -2px -2px 5px #4c4c4c, 0 0 0 3px #63b3ed;
+      outline: none;
+    }
+
+    .text-yellow-400 {color: #f6e05e;}
+    .text-gray-50 {color: #f7fafc;}
+    .text-gray-200 {color: #cbd5e0;}
+    .text-gray-300 {color: #a0aec0;}
+    .text-gray-400 {color: #718096;}
+    .text-green-400 {color: #48bb78;}
+    .text-yellow-300 {color: #faf089;}
+    .text-purple-300 {color: #d6bcfa;}
+    .text-blue-300 {color: #90cdf4;}
+    .text-red-300 {color: #feb2b2;}
+
+    .font-semibold {font-weight: 600;}
+    .font-bold {font-weight: 700;}
+    .capitalize {text-transform: capitalize;}
+    .mb-4 {margin-bottom: 1rem;}
+    .mb-6 {margin-bottom: 1.5rem;}
+    .mb-8 {margin-bottom: 2rem;}
+    .mt-6 {margin-top: 1.5rem;}
+    .mt-8 {margin-top: 2rem;}
+    .px-4 {padding-left: 1rem; padding-right: 1rem;}
+    .py-2 {padding-top: 0.5rem; padding-bottom: 0.5rem;}
+    .text-center {text-align: center;}
+    .hidden {display: none !important;}
+    .rounded-md {border-radius: 8px;}
+    .space-y-4 > * + * {margin-top: 1rem;}
+    .w-full {width: 100%;}
+    .max-w-md {max-width: 400px;}
+    .max-w-4xl {max-width: 960px;}
+    .overflow-x-auto {overflow-x: auto;}
+    .visually-hidden {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0,0,0,0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    /* Pairing Item for Admin Panel (Match to Record) */
+    .pairing-item {
+      background: #2a2a2a;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: inset 1px 1px 3px #1a1a1a, inset -1px -1px 3px #4c4c4c;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .pairing-item .board-number {
+        font-size: 0.875rem;
+        font-weight: bold;
+        color: #f6e05e;
+        margin-bottom: 0.25rem;
+    }
+    .pairing-item .players {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #f7fafc;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .pairing-item .players span:first-child {
+        color: #fc8181; /* Red-400 */
+    }
+    .pairing-item .players span:last-child {
+        color: #63b3ed; /* Blue-400 */
+    }
+    .pairing-item .result-control {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+    }
+    .pairing-item .result-control select {
+        flex-grow: 1;
+        min-width: 120px;
+    }
+    .pairing-item .result-control button {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+        border-radius: 8px;
+        flex-shrink: 0;
+    }
+
+    /* Cup Flowchart Specific Styles (copied from style.css for self-containment) */
+    #cup-flowchart {
+        min-height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start; /* Align to start for horizontal scroll */
+        color: #a0aec0;
+        gap: 50px; /* Space between rounds */
+    }
+    .cup-round {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex-shrink: 0; /* Prevent shrinking when scrolling */
+    }
+    .cup-round .matches-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px; /* Gap between matches in a round */
+    }
+    .cup-match {
+        background-color: #2d3748;
+        border: 1px solid #4a5568;
+        border-radius: 8px;
+        padding: 10px;
+        text-align: center;
+        width: 150px;
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+        position: relative;
+        color: #e2e8f0;
+    }
+    .cup-match.winner-declared {
+        background-color: #2f855a; /* green-700 */
+        border-color: #38a169; /* green-600 */
+        font-weight: bold;
+    }
+    .cup-match-players div {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .cup-match-score {
+        font-weight: bold;
+        color: #f6e05e;
+    }
+    .cup-match-connector { /* Not used with simplified CSS for flowchart */ }
+
+    .cup-round-container {
+        display: flex;
+        flex-direction: row; /* Rounds horizontally */
+        align-items: center;
+        gap: 50px; /* Gap between rounds */
+        position: relative;
+    }
+    .cup-player-node { /* For nodes that represent only players, not matches */
+      background-color: #3a3a3a;
+    }
+
+    @media (max-width: 768px) {
+      main {
+        padding: 1rem;
+        min-height: calc(100vh - 160px);
+      }
+      .grid.md\\:grid-cols-2,
+      .grid.md\\:grid-cols-3,
+      .grid.md\\:grid-cols-4 {
+        grid-template-columns: 1fr !important;
+      }
+      nav {
+        gap: 0.5rem;
+      }
+      header {
+        height: auto;
+        flex-wrap: wrap;
+        padding: 1rem;
+        gap: 0.5rem;
+        justify-content: center;
+        text-align: center;
+      }
+      .pairing-item .result-control {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .pairing-item .result-control select,
+      .pairing-item .result-control button {
+        width: 100%;
+      }
+      #cup-flowchart {
+        flex-direction: column; /* Stack rounds vertically on small screens */
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 aria-label="MRC Chess Tournaments Admin Panel">
+      <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor" width="32" height="32" style="flex-shrink: 0;">
+        <path d="M12 2L6 5V19L12 22L18 19V5L12 2Z"></path>
+        <path d="M12 4.472L16.242 6.5V17.528L12 19.528L7.758 17.528V6.5L12 4.472Z" fill="#CBD5E0"></path>
+        <path d="M12 6.5L7.758 8.528V17.528L12 19.528L16.242 17.528V8.528L12 6.5Z" fill="#4299E1"></path>
+        <path d="M12 9.5L9.5 11.5L12 13.5L14.5 11.5L12 9.5Z" fill="#F6E05E"></path>
+      </svg>
+      MRC Chess Tournaments - Admin Panel
+    </h1>
+    <nav>
+      <a href="index.html" class="neumorphic-button" aria-label="Return to homepage with tournament list">
+        <span class="material-icons" aria-hidden="true" style="font-size:20px;">home</span>Home
+      </a>
+      <button id="back-to-detail-btn" class="neumorphic-button" aria-label="Back to tournament detail page">
+        <span class="material-icons" aria-hidden="true" style="font-size:20px;">arrow_back</span>Back to Tournament
+      </button>
+    </nav>
+  </header>
+
+  <div id="message-area" class="info visually-hidden" role="alert" aria-live="polite" aria-atomic="true"></div>
+
+  <main id="admin-panel-container" role="main" aria-label="Admin panel for tournament management" tabindex="-1">
+    <h2 id="admin-tournament-name" class="text-center" aria-live="polite" tabindex="0"></h2>
+    <p class="text-center mb-8" id="admin-tournament-info" aria-live="polite" tabindex="0" style="font-weight:600; font-size:1.125rem;"></p>
+
+    <section id="tournament-actions" aria-label="Tournament action controls">
+      <h3>Tournament Actions</h3>
+      <div class="grid md:grid-cols-3 grid-cols-1 gap-4">
+        <button id="start-tournament-btn" class="neumorphic-button text-blue-300" aria-describedby="start-tournament-desc">
+          <span class="material-icons" aria-hidden="true" style="font-size:20px;">play_arrow</span>Start Tournament
+        </button>
+        <button id="generate-next-round-btn" class="neumorphic-button text-purple-300" aria-describedby="generate-next-round-desc">
+          <span class="material-icons" aria-hidden="true" style="font-size:20px;">update</span>Generate Next Round
+        </button>
+        <button id="end-tournament-btn" class="neumorphic-button text-red-300" aria-describedby="end-tournament-desc">
+          <span class="material-icons" aria-hidden="true" style="font-size:20px;">stop</span>End Tournament
+        </button>
+      </div>
+      <p id="start-tournament-desc" class="visually-hidden">Start the tournament when ready with enough players and teams.</p>
+      <p id="generate-next-round-desc" class="visually-hidden">Generate the next round pairings after all match results are recorded.</p>
+      <p id="end-tournament-desc" class="visually-hidden">End the tournament and finalize results.</p>
+    </section>
+
+    <section id="pairing-options" aria-label="Pairing options and manual pairing controls">
+      <h3>Pairing Options (Current Round: <span id="admin-current-round-number" aria-live="polite">0</span>)</h3>
+      <div class="grid md:grid-cols-4 grid-cols-1 gap-4" role="list">
+        <button id="manual-pairing-btn" class="neumorphic-button text-yellow-300" role="listitem" aria-controls="manual-pairing-area" aria-expanded="false">
+          <span class="material-icons" aria-hidden="true" style="font-size:20px;">edit</span>Manual Pairing
+        </button>
+        <button id="random-pairing-btn" class="neumorphic-button text-yellow-300" role="listitem">
+          <span class="material-icons" aria-hidden="true" style="font-size:20px;">shuffle</span>Random Pairing
+        </button>
+        <button id="auto-pairing-btn" class="neumorphic-button text-yellow-300" role="listitem">
+          <span class="material-icons" aria-hidden="true" style="font-size:20px;">auto_fix_high</span>Auto Pairing
+        </button>
+        <button id="pairing-with-points-btn" class="neumorphic-button text-yellow-300" role="listitem">
+          <span class="material-icons" aria-hidden="true" style="font-size:20px;">scoreboard</span>Pairing with Points
+        </button>
+      </div>
+
+      <div id="manual-pairing-area" class="mt-6 p-4 border border-gray-700 rounded-md visually-hidden" aria-live="polite" aria-label="Manual pairing controls" role="region" tabindex="-1">
+        <h4>Manual Pairing</h4>
+        <div id="unpaired-players-list" class="flex flex-wrap gap-2 mb-4" aria-live="polite" aria-atomic="true" aria-relevant="additions removals">
+          </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label for="player1-select" class="block text-gray-300 mb-1">Player 1</label>
+            <select id="player1-select" class="neumorphic-select" aria-required="true"></select>
+          </div>
+          <div>
+            <label for="player2-select" class="block text-gray-300 mb-1">Player 2</label>
+            <select id="player2-select" class="neumorphic-select" aria-required="true"></select>
+          </div>
+        </div>
+        <button id="add-manual-pair-btn" class="neumorphic-button mt-4 text-green-300" aria-label="Add manual pair">Add Manual Pair</button>
+      </div>
+    </section>
+
+    <section id="record-results" aria-label="Match result recording" class="p-6 neumorphic-card rounded-lg visually-hidden">
+      <h3>Record Match Results</h3>
+      <div id="matches-to-record" class="space-y-4" aria-live="polite" aria-atomic="true">
+        </div>
+      <p id="no-matches-to-record" class="text-gray-400 italic mt-2 visually-hidden">No matches to record for the current round.</p>
+    </section>
+
+    <section id="cup-flowchart-section" aria-label="Cup mode flowchart visualization" class="p-6 neumorphic-card rounded-lg visually-hidden">
+      <h3>Cup Mode Flowchart</h3>
+      <div id="cup-flowchart" class="overflow-x-auto p-4 bg-gray-800 rounded-md" tabindex="0" aria-live="polite" aria-atomic="true">
+        <p class="text-gray-400 italic text-center">Cup mode flowchart will be visualized here once pairings are generated.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="text-gray-400 text-sm text-center mb-6">
+    <p>&copy; 2024 MRC Chess Tournaments. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
